@@ -54,7 +54,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -72,14 +72,13 @@ import com.example.dessertclicker.data.Datasource
 import com.example.dessertclicker.model.Dessert
 import com.example.dessertclicker.ui.theme.DessertClickerTheme
 
-// Tag for logging
-private const val TAG = "MainActivity"
+private const val TAG = "MainActivity" // Tag constant for logging
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         enableEdgeToEdge()
-        super.onCreate(savedInstanceState)
-        Log.d(TAG, "onCreate Called")
+        super.onCreate(savedInstanceState) // Must be called when overriding "OnCreate"
+        Log.d(TAG, "onCreate Called") // Writes a log message, "onCreate Called" in the log menu
         setContent {
             DessertClickerTheme {
                 // A surface container using the 'background' color from the theme
@@ -94,35 +93,39 @@ class MainActivity : ComponentActivity() {
         }
     }
 
-
+    // Makes ap visible on screen; can't interact with it
     override fun onStart() {
         super.onStart()
-        Log.d(TAG, "onStart Called")
+        Log.d(TAG, "onStart Called") // Writes a log message, "onStart Called" in the log menu
     }
-
+    // Brings app into foreground; CAN interact with it.
     override fun onResume() {
         super.onResume()
-        Log.d(TAG, "onResume Called")
+        Log.d(TAG, "onResume Called") // Writes a log message, "onResume Called" in the log menu
     }
 
+    // Activity is being started, but NOT for the first time.
     override fun onRestart() {
         super.onRestart()
-        Log.d(TAG, "onRestart Called")
+        Log.d(TAG, "onRestart Called") // Writes a log message, "onCreate Called" in the log menu
     }
 
+    // App no longer has focus, but is still visible on screen.
     override fun onPause() {
         super.onPause()
-        Log.d(TAG, "onPause Called")
+        Log.d(TAG, "onPause Called") // Writes a log message, "onPause Called" in the log menu
     }
 
+    // App is no longer visible on screen.
     override fun onStop() {
         super.onStop()
-        Log.d(TAG, "onStop Called")
+        Log.d(TAG, "onStop Called") // Writes a log message, "onStop Called" in the log menu
     }
 
+    // Called before activity is destroyed, due to configuration changes, or code such as "finish()" being called.
     override fun onDestroy() {
         super.onDestroy()
-        Log.d(TAG, "onDestroy Called")
+        Log.d(TAG, "onDestroy Called") // Writes a log message, "onDestroy Called" in the log menu
     }
 }
 
@@ -180,16 +183,15 @@ private fun DessertClickerApp(
     desserts: List<Dessert>
 ) {
 
-    var revenue by rememberSaveable { mutableStateOf(0) }
-    var dessertsSold by rememberSaveable { mutableStateOf(0) }
-
-    val currentDessertIndex by rememberSaveable { mutableStateOf(0) }
-
+    // "rememberSaveable" allows for values to be saved across recompositions and configuration changes (onDestroy())
+    var revenue by rememberSaveable { mutableIntStateOf(0) }
+    var dessertsSold by rememberSaveable { mutableIntStateOf(0) }
+    val currentDessertIndex by rememberSaveable { mutableIntStateOf(0) }
     var currentDessertPrice by rememberSaveable {
-        mutableStateOf(desserts[currentDessertIndex].price)
+        mutableIntStateOf(desserts[currentDessertIndex].price)
     }
     var currentDessertImageId by rememberSaveable {
-        mutableStateOf(desserts[currentDessertIndex].imageId)
+        mutableIntStateOf(desserts[currentDessertIndex].imageId)
     }
 
     Scaffold(
